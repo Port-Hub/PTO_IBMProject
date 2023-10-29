@@ -21,8 +21,7 @@ void setup() {
   pinMode(IRPIN_IN, INPUT);
   pinMode(IRPIN_OUT, INPUT);
   Serial.print("Connecting to WiFi");
-  // WiFi.begin("Rahul's Galaxy S20+","Rahul@123");
-  WiFi.begin("Constance's Galaxy Z Flip4", "gcal6726");
+  WiFi.begin("Rahul's Galaxy S20+","Rahul@123");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
