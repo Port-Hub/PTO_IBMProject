@@ -1,39 +1,41 @@
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-} from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = () => {
-  const [currentLocation,setCurrentLocation] = useState({
-    lat: 6.9271,
-    lng: 79.8612,
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: 0,
+    lng: 0,
   });
-  const center = {
-    lat: 6.9271,
-    lng: 79.8612,
-  };
+  const [passengerCount, setPassengerCount] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCurrentLocation({
-        lat: currentLocation.lat+0.001,
-        lng: currentLocation.lng+0.001,
+    const fetch = async () => {
+      await axios.get(import.meta.env.VITE_API_URL! + "/data").then((res) => {
+        console.log(res.data);
+        setCurrentLocation({
+          lat: res.data.location.lat,
+          lng: res.data.location.lng,
+        });
+        setPassengerCount(res.data.ridership.total);
       });
-      }, 2000);
-    }, [currentLocation]);
-  
+    };
+    setTimeout(() => {
+      fetch();
+    }, 5000);
+  }, [currentLocation]);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY!,
-});
+  });
 
   return (
     <div className="flex flex-col gap-10">
       <h2 className="text-3xl text-primary text-center">Live Tracking</h2>
-{      isLoaded?  <GoogleMap
-          center={center}
+      {isLoaded ? (
+        <GoogleMap
+          center={currentLocation}
           zoom={15}
           mapContainerStyle={{ width: "50vw", height: "50vh" }}
           options={{
@@ -41,14 +43,16 @@ const Home = () => {
             streetViewControl: false,
             mapTypeControl: false,
             fullscreenControl: false,
-  }}>
+          }}
+        >
           <Marker position={currentLocation} />
-  </GoogleMap>:null}
+        </GoogleMap>
+      ) : null}
 
       <div className="flex flex-row gap-5 items-center justify-center">
         <h2 className="text-2xl text-primary">Passenger Count : </h2>
-        <h2 className="text-2xl text-primary">0</h2>
-    </div>
+        <h2 className="text-2xl text-primary">{passengerCount}</h2>
+      </div>
     </div>
   );
 };
