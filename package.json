@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "google-map-react": "^2.2.1",
-    "react-router-dom": "^6.17.0"
-  },
-  "devDependencies": {
-    "@types/google-map-react": "^2.1.9"
-  }
-}
