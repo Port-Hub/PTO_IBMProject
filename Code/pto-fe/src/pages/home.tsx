@@ -2,7 +2,6 @@ import {
   useJsApiLoader,
   GoogleMap,
   Marker,
-  InfoWindow,
 } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 
@@ -30,10 +29,6 @@ const Home = () => {
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY!,
 });
 
-
-  // useEffect(() => {
-  //   setCenter({ lat: center.lat+1, lng: center.lng+1 });
-  // }, [center]);
   return (
     <div className="flex flex-col gap-10">
       <h2 className="text-3xl text-primary text-center">Live Tracking</h2>
