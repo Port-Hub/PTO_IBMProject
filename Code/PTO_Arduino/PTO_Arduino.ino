@@ -20,8 +20,8 @@ const long interval = 10000;  // 10 seconds interval
 
 void addLocationData(JsonDocument &doc, float latitude, float longitude) {
   JsonObject location = doc.createNestedObject("location");
-  location["latitude"] = latitude;
-  location["longitude"] = longitude;
+  location["lat"] = latitude;
+  location["lng"] = longitude;
 }
 
 void addRidershipData(JsonDocument &doc, int totalPassengers) {

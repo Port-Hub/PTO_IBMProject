@@ -14,8 +14,8 @@ const Home = () => {
       await axios.get(import.meta.env.VITE_API_URL! + "/data").then((res) => {
         console.log(res.data);
         setCurrentLocation({
-          lat: res.data.location.lat,
-          lng: res.data.location.lng,
+          lat: parseFloat(res.data.location.lat),
+          lng: parseFloat(res.data.location.lng),
         });
         setPassengerCount(res.data.ridership.total);
       });
